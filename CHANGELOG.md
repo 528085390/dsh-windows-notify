@@ -5,6 +5,15 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **README 拆成中英两份**：`README.md`（中文，默认）与 `README.en.md`（英文），章节一一对应、顶部互相切换，
+  不再把英文摘要塞在中文 README 末尾。
+- **安装章节重排**：新增「让 agent 帮你装」（直接把仓库地址丢给 DSH 会话）；
+  图形界面 / 命令行统一列出三种等价写法（`https://`、`git+https://`、`github:`），三种都实测装出 0.3.0。
+- **新增「为什么不能用包名安装」**：解释 `dsh plugin add <spec>` 里纯包名走 npm registry，
+  而 `dsh-windows-notify` 在 npm 上属于另一位作者。
+
 ## [0.3.0] - 2026-10-20
 
 ### Added

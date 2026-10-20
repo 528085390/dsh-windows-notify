@@ -10,8 +10,7 @@
   <img alt="deps" src="https://img.shields.io/badge/dependencies-0-brightgreen">
 </p>
 
-> English: a zero-dependency DeepSeek Harness plugin that raises a native Windows toast when an agent turn ends,
-> with a settings-page switch. See [English](#english).
+**中文** | [English](README.en.md)
 
 ## 特性
 
@@ -26,27 +25,43 @@
 
 **要求**：Windows 10 / 11（需要 `Windows.UI.Notifications` WinRT API）+ DSH `>= 0.1.7-rc.1`。
 
-### 用 DSH 官方的插件入口安装（推荐）
+### 让 agent 帮你装（最省事）
 
-插件不用发到 npm，直接从 GitHub 装。
+在 DSH 里新开一个会话，直接说：
 
-**图形界面**：侧边栏 **插件** → **添加插件**，填 Git 地址：
+> 帮我安装 https://github.com/528085390/dsh-windows-notify 这个插件
 
-```
-git+https://github.com/528085390/dsh-windows-notify.git
-```
-
-**命令行**：
+它会把这个地址写进 profile 的 `dependencies` 和 `dsh.profile.bundles`，跑 `pnpm install`，
+然后提醒你重启 DSH。装了 DSH CLI 的环境里，等价于：
 
 ```powershell
-dsh plugin add git+https://github.com/528085390/dsh-windows-notify.git
+dsh plugin add https://github.com/528085390/dsh-windows-notify
 ```
 
-装完回到 **插件** 页把 `dsh-windows-notify` 这一项打开（或用设置页的插件开关），然后**重启 DSH** —— 宿主半身在启动时 import，没有热重载。
+### 图形界面 / 命令行
 
-> ⚠️ **不要**写成裸包名 `dsh plugin add dsh-windows-notify`：npm 上同名包 `dsh-windows-notify@1.0.2` 是**另一位作者**（Yxkzx）的项目，装到的不是本仓库。本仓库没有发布到 npm。
->
-> 想锁版本就加 `#<commit>`：`git+https://github.com/528085390/dsh-windows-notify.git#<sha>`。
+侧边栏 **插件** → **添加插件**，下面三种写法指向同一个仓库，任填一种：
+
+```
+https://github.com/528085390/dsh-windows-notify
+git+https://github.com/528085390/dsh-windows-notify.git
+github:528085390/dsh-windows-notify
+```
+
+命令行：`dsh plugin add <上面任意一条>`。
+
+装完回到 **插件** 页把 `dsh-windows-notify` 这一项打开，然后**重启 DSH** —— 宿主半身在启动时 import，没有热重载。
+想锁版本就加 `#<commit>`：`https://github.com/528085390/dsh-windows-notify#<sha>`。
+
+### 为什么不能用包名安装
+
+`dsh plugin add <spec>` 里，**纯包名走 npm registry**。本仓库没有发布到 npm，而 registry 上
+`dsh-windows-notify` 这个名字属于**另一位作者**（Yxkzx，当前 `1.0.2`）——它同样是一个 DSH 通知插件、
+同样声明了 `dsh.bundle.patch`，所以装裸包名**不会报错**，只会静默装上别人的代码；两边包名还相同，
+会和本仓库的依赖记录撞在一起。
+
+包名 ≠ 仓库名。要用包名安装，得先 `npm publish`；或者发布到自己的 scope（例如
+`@528085390/dsh-windows-notify`），那要同时改 `package.json` 的 `name` 和 `cordis.patch.yml` 的 `name:`。
 
 ### 手动挂到 profile（离线 / 开发用）
 
@@ -95,7 +110,7 @@ Get-Content "$HOME\.dsh\windows-notify.log" -Tail 5
 2026-10-20T07:52:23.492Z toast session-bec4c0d4-...#3 exit=0 out=WINRT_OK
 ```
 
-没有这两行 = 插件没加载，见 [docs/troubleshooting.md](docs/troubleshooting.md)。
+没有前两行 = 插件没加载，见 [docs/troubleshooting.md](docs/troubleshooting.md)。
 
 ## 使用
 
@@ -147,7 +162,7 @@ GUI 打不开时，插件目录里有 `toggle.cmd`（翻转开关）和 `status.
 
 - [docs/architecture.md](docs/architecture.md) —— 事件流、去重键、子代理判定、客户端注册、生命周期
 - [docs/bridge-protocol.md](docs/bridge-protocol.md) —— HTTP 桥完整协议（路由、schema、状态码、同源守卫）
-- [docs/troubleshooting.md](docs/troubleshooting.md) —— 8 个已知的坑与排查流程
+- [docs/troubleshooting.md](docs/troubleshooting.md) —— 9 个已知的坑与排查流程
 
 ## 目录结构
 
@@ -192,28 +207,3 @@ curl.exe -s -X POST http://127.0.0.1:<port>/api/dsh-windows-notify/test
 ## License
 
 [MIT](LICENSE) © 2026 528085390
-
-## English
-
-`dsh-windows-notify` raises a native Windows toast whenever a DeepSeek Harness agent turn ends.
-
-- One toast per turn, deduplicated by `<sessionId>#<turn>`.
-- Bilingual plugin-page title and description (`locale/en.json`, `locale/zh.json`) plus an icon (`icon.svg`).
-- Switches live in **Settings → Notifications** (a `settings.section` contribution at order 16); changes apply on the next turn, no restart.
-- Subagent sessions are muted by default.
-- Zero dependencies: no build step, no npm packages, no native modules — one ESM host file, one browser ESM file and one PowerShell 5.1 script.
-- Every decision is logged to `~/.dsh/windows-notify.log`.
-
-**Install** through DSH's own plugin flow — sidebar **Plugins → Add plugin** (or `dsh plugin add`) with:
-
-```
-git+https://github.com/528085390/dsh-windows-notify.git
-```
-
-Turn the bundle on, then restart DSH (the host half is imported at startup). Do **not** install the bare name
-`dsh-windows-notify` — an unrelated package by another author owns that name on npm; this repository is not published there.
-The offline/development route (a `file:` dependency plus `dsh.profile.bundles`) is described in
-[手动挂到 profile](#手动挂到-profile离线--开发用).
-
-Options are stored in `~/.dsh/windows-notify.json`; the settings page talks to the host through a same-origin HTTP
-bridge documented in [docs/bridge-protocol.md](docs/bridge-protocol.md).
