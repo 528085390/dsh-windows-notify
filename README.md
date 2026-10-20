@@ -25,7 +25,29 @@
 
 **要求**：Windows 10 / 11（需要 `Windows.UI.Notifications` WinRT API）+ DSH `>= 0.1.7-rc.1`。
 
-### 作为 profile bundle 安装（推荐）
+### 用 DSH 官方的插件入口安装（推荐）
+
+插件不用发到 npm，直接从 GitHub 装。
+
+**图形界面**：侧边栏 **插件** → **添加插件**，填 Git 地址：
+
+```
+git+https://github.com/528085390/dsh-windows-notify.git
+```
+
+**命令行**：
+
+```powershell
+dsh plugin add git+https://github.com/528085390/dsh-windows-notify.git
+```
+
+装完回到 **插件** 页把 `dsh-windows-notify` 这一项打开（或用设置页的插件开关），然后**重启 DSH** —— 宿主半身在启动时 import，没有热重载。
+
+> ⚠️ **不要**写成裸包名 `dsh plugin add dsh-windows-notify`：npm 上同名包 `dsh-windows-notify@1.0.2` 是**另一位作者**（Yxkzx）的项目，装到的不是本仓库。本仓库没有发布到 npm。
+>
+> 想锁版本就加 `#<commit>`：`git+https://github.com/528085390/dsh-windows-notify.git#<sha>`。
+
+### 手动挂到 profile（离线 / 开发用）
 
 1. 把本仓库放到任意目录，例如 `~/.dsh/local-plugins/dsh-windows-notify`。
 2. 编辑 profile 的 `package.json`（桌面端是 `~/.dsh/profiles/desktop/package.json`）：
@@ -176,6 +198,16 @@ curl.exe -s -X POST http://127.0.0.1:<port>/api/dsh-windows-notify/test
 - Zero dependencies: no build step, no npm packages, no native modules — one ESM host file, one browser ESM file and one PowerShell 5.1 script.
 - Every decision is logged to `~/.dsh/windows-notify.log`.
 
-Install it as a profile bundle (see [安装](#作为-profile-bundle-安装推荐)) and restart DSH. Options are stored in
-`~/.dsh/windows-notify.json`; the settings page talks to the host through a same-origin HTTP bridge documented in
-[docs/bridge-protocol.md](docs/bridge-protocol.md).
+**Install** through DSH's own plugin flow — sidebar **Plugins → Add plugin** (or `dsh plugin add`) with:
+
+```
+git+https://github.com/528085390/dsh-windows-notify.git
+```
+
+Turn the bundle on, then restart DSH (the host half is imported at startup). Do **not** install the bare name
+`dsh-windows-notify` — an unrelated package by another author owns that name on npm; this repository is not published there.
+The offline/development route (a `file:` dependency plus `dsh.profile.bundles`) is described in
+[手动挂到 profile](#手动挂到-profile离线--开发用).
+
+Options are stored in `~/.dsh/windows-notify.json`; the settings page talks to the host through a same-origin HTTP
+bridge documented in [docs/bridge-protocol.md](docs/bridge-protocol.md).

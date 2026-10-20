@@ -5,6 +5,20 @@
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-10-20
+
+### Fixed
+
+- **装出来的包缺 `cordis.patch.yml`**：`files` 只写了 `["lib"]`，无论走 `dsh plugin add <git>`
+  还是 `npm publish`，装进 profile 后 `dsh.bundle.patch` 指向的文件都不存在，bundle 直接加载失败。
+  现在 `files` 是 `["lib", "cordis.patch.yml"]`。
+
+### Added
+
+- README 增加「用 DSH 官方的插件入口安装」：侧边栏 **插件 → 添加插件** 填
+  `git+https://github.com/528085390/dsh-windows-notify.git`，或 `dsh plugin add` 同款 spec。
+- 明确警告不要用裸包名安装：npm 上的 `dsh-windows-notify@1.0.2` 属于另一位作者（Yxkzx），不是本仓库。
+
 ## [0.2.1] - 2026-10-20
 
 ### Fixed
