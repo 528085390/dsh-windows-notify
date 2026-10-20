@@ -5,6 +5,20 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-20
+
+### Added
+
+- **插件页中英双语标题 / 描述**：新增 `locale/en.json`、`locale/zh.json`，内容为
+  `{"meta":{"title":"…","description":"…"}}`。DSH 的 `readPluginMeta()`（`@deepseek-ai/dsh-app-boot`）
+  会解析 `<包名>/locale/en.json`，再用 `readdir` 把同目录下其它语言文件一并读入，
+  最后交给 `resolveText()` 按当前界面语言取值（缺语言时回落 `en`）。
+- **插件页图标**：新增 `icon.svg`（64×64，<256 KiB），通过 `exports["./icon"]` 暴露。
+- `package.json` 补 `exports["./locale/*.json"]`、`exports["./icon"]`，并把 `locale/*.json`、
+  `icon.svg` 加进 `files`——缺 `exports` 时 `readPluginMeta()` 会当作「没有本地化资源」静默跳过。
+
+> 纯元数据改动，不影响通知行为；装完后重启 DSH（或重装插件）才会重新读取。
+
 ## [0.2.2] - 2026-10-20
 
 ### Fixed

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Windows Notifications",
+    "description": "Pops a native Windows toast whenever a turn finishes. Every switch lives in Settings."
+  }
+}

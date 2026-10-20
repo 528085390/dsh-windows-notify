@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Windows notification">
+  <rect width="64" height="64" rx="14" fill="#247bbf"/>
+  <path d="M32 13c-6.3 0-10.7 4.7-10.7 10.9v7.5c0 1.7-.7 3.3-1.9 4.5l-2.2 2.3c-1.1 1.2-.3 3.2 1.4 3.2h26.8c1.7 0 2.5-2 1.4-3.2l-2.2-2.3a6.3 6.3 0 0 1-1.9-4.5v-7.5C42.7 17.7 38.3 13 32 13z" fill="#fff"/>
+  <path d="M26.9 45.2a5.1 5.1 0 0 0 10.2 0z" fill="#fff"/>
+</svg>

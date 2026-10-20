@@ -1,6 +1,6 @@
 {
   "name": "dsh-windows-notify",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "private": true,
   "description": "Windows toast notification when a DeepSeek Harness agent turn finishes, with a settings-page switch.",
   "license": "MIT",
@@ -27,11 +27,15 @@
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
   },
   "files": [
     "lib",
-    "cordis.patch.yml"
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
   ],
   "dsh": {
     "bundle": {

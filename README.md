@@ -20,6 +20,7 @@
 - **默认不吵**。子代理会话的回合默认不弹（`notifySubagents: false`）。
 - **零依赖**。无构建步骤、无 npm 依赖、无 native 模块：宿主侧是一个 ESM 文件 + 一个 PowerShell 5.1 脚本，客户端侧是一个浏览器 ESM 文件。
 - **可诊断**。每回合一行日志（弹了 / 跳过 + 原因 + 真实 turn 号）。
+- **插件页中英双语**。`locale/en.json` + `locale/zh.json` 提供插件标题与描述，界面语言切到英文就显示英文；自带 `icon.svg`。
 
 ## 安装
 
@@ -156,6 +157,10 @@ GUI 打不开时，插件目录里有 `toggle.cmd`（翻转开关）和 `status.
 │   ├── index.js          # 宿主半身：turn-stopping → toast，HTTP 桥
 │   ├── client.js         # 客户端半身：设置页「通知」分区
 │   └── toast.ps1         # WinRT toast（纯 ASCII，PS 5.1）
+├── locale/
+│   ├── en.json           # 插件页标题/描述（英文）
+│   └── zh.json           # 插件页标题/描述（中文）
+├── icon.svg              # 插件页图标（导出为 ./icon，内联成 data URL）
 ├── cordis.patch.yml      # bundle patch：插入 loader 行
 ├── package.json          # exports + dsh.client + dsh.bundle.patch
 ├── toggle.cmd/.ps1       # 命令行开关
@@ -193,6 +198,7 @@ curl.exe -s -X POST http://127.0.0.1:<port>/api/dsh-windows-notify/test
 `dsh-windows-notify` raises a native Windows toast whenever a DeepSeek Harness agent turn ends.
 
 - One toast per turn, deduplicated by `<sessionId>#<turn>`.
+- Bilingual plugin-page title and description (`locale/en.json`, `locale/zh.json`) plus an icon (`icon.svg`).
 - Switches live in **Settings → Notifications** (a `settings.section` contribution at order 16); changes apply on the next turn, no restart.
 - Subagent sessions are muted by default.
 - Zero dependencies: no build step, no npm packages, no native modules — one ESM host file, one browser ESM file and one PowerShell 5.1 script.
