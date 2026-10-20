@@ -1,0 +1,7 @@
+# dsh-windows-notify bundle patch —— 回合结束弹 Windows 原生通知
+# 通过 profile 的 dsh.profile.bundles 挂载，无需手改 profile 的 cordis.patch.yml。
+- insert:
+    - id: windows-notify
+      name: dsh-windows-notify
+      config:
+        enabled: true

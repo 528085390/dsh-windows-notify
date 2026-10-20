@@ -1,0 +1,14 @@
+# 依赖
+node_modules/
+pnpm-lock.yaml
+
+# 运行时产物（正常写在 ~/.dsh 下，这里兜底）
+*.log
+windows-notify.json
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.bak

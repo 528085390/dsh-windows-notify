@@ -1,0 +1,48 @@
+{
+  "name": "dsh-windows-notify",
+  "version": "0.2.1",
+  "private": true,
+  "description": "Windows toast notification when a DeepSeek Harness agent turn finishes, with a settings-page switch.",
+  "license": "MIT",
+  "author": "528085390",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "windows",
+    "toast",
+    "notification",
+    "winrt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/528085390/dsh-windows-notify.git"
+  },
+  "homepage": "https://github.com/528085390/dsh-windows-notify#readme",
+  "bugs": {
+    "url": "https://github.com/528085390/dsh-windows-notify/issues"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    },
+    "engines": {
+      "dsh": ">=0.1.7-rc.1"
+    }
+  }
+}

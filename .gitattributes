@@ -1,0 +1,5 @@
+# 仓库内统一 LF，Windows 脚本按 CRLF 检出（cmd.exe / PowerShell 5.1 更稳）
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+*.png binary
